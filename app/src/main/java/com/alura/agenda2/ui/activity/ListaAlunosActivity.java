@@ -33,6 +33,7 @@ public class ListaAlunosActivity extends AppCompatActivity {
         setContentView(R.layout.activity_lista_alunos);
         setTitle(TITULO_APPBAR);
         configuraFABNovoAluno();
+        configuraLista();
     }
 
     private void configuraFABNovoAluno() {
@@ -52,19 +53,31 @@ public class ListaAlunosActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        configuraLista();
+        atualizaAlunos();
+    }
+
+    private void atualizaAlunos() {
+        adapter.clear();
+        adapter.addAll(alunoDAO.todos());
     }
 
     private void configuraLista() {
         ListView listaAlunos = findViewById(R.id.activity_lista_de_alunos_listview);
-        final List<Aluno> alunos = alunoDAO.todos();
-        configuraAdapter(listaAlunos, alunos);
+        configuraAdapter(listaAlunos);
         configuraListenerDeCliquePorItem(listaAlunos);
+        configuraListenerDeCliqueLongoPorItem(listaAlunos);
+    }
+
+    private void configuraListenerDeCliqueLongoPorItem(ListView listaAlunos) {
         listaAlunos.setOnItemClickListener((parent, view, position, id) -> {
             Aluno alunoEscolhido = (Aluno) parent.getItemAtPosition(position);
-            alunoDAO.remove(alunoEscolhido);
-            adapter.remove(alunoEscolhido);
+            removeAluno(alunoEscolhido);
         });
+    }
+
+    private void removeAluno(Aluno alunoEscolhido) {
+        alunoDAO.remove(alunoEscolhido);
+        adapter.remove(alunoEscolhido);
     }
 
     private void configuraListenerDeCliquePorItem(ListView listaAlunos) {
@@ -80,8 +93,8 @@ public class ListaAlunosActivity extends AppCompatActivity {
         startActivity(vaiParaFormulario);
     }
 
-    private void configuraAdapter(ListView listaAlunos, List<Aluno> alunos) {
-        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, alunos);
+    private void configuraAdapter(ListView listaAlunos) {
+        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
         listaAlunos.setAdapter(adapter);
     }
 }
