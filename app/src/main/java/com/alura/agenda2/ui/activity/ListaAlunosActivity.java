@@ -24,6 +24,8 @@ public class ListaAlunosActivity extends AppCompatActivity {
 
     private final AlunoDAO alunoDAO = new AlunoDAO();
     public static final String TITULO_APPBAR = "Lista de Alunos";
+    private ArrayAdapter<Aluno> adapter;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -61,6 +63,7 @@ public class ListaAlunosActivity extends AppCompatActivity {
         listaAlunos.setOnItemClickListener((parent, view, position, id) -> {
             Aluno alunoEscolhido = (Aluno) parent.getItemAtPosition(position);
             alunoDAO.remove(alunoEscolhido);
+            adapter.remove(alunoEscolhido);
         });
     }
 
@@ -78,10 +81,7 @@ public class ListaAlunosActivity extends AppCompatActivity {
     }
 
     private void configuraAdapter(ListView listaAlunos, List<Aluno> alunos) {
-        listaAlunos.setAdapter(new ArrayAdapter<>(
-                this,
-                android.R.layout.simple_list_item_1,
-                alunos
-        ));
+        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, alunos);
+        listaAlunos.setAdapter(adapter);
     }
 }
