@@ -33,10 +33,7 @@ public class ListaAlunosActivity extends AppCompatActivity {
         configuraFABNovoAluno();
         configuraLista();
 
-        for (int i = 0; i < 10; i++) {
-            alunoDAO.salva(new Aluno("Alex", "6258569858", "alex@gmail.com"));
-            alunoDAO.salva((new Aluno("Gui", "6478589656", "gui@alura.com.br")));
-        }
+
     }
 
     @Override
