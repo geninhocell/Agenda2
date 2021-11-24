@@ -6,10 +6,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.ContextMenu;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.ListView;
 
 import androidx.annotation.NonNull;
@@ -19,17 +22,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.alura.agenda2.R;
 import com.alura.agenda2.dao.AlunoDAO;
 import com.alura.agenda2.model.Aluno;
+import com.alura.agenda2.ui.adapter.ListaAlunoAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ListaAlunosActivity extends AppCompatActivity {
-
-
     private final AlunoDAO alunoDAO = new AlunoDAO();
     public static final String TITULO_APPBAR = "Lista de Alunos";
-    private ArrayAdapter<Aluno> adapter;
-
+    private ListaAlunoAdapter adapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -55,12 +57,12 @@ public class ListaAlunosActivity extends AppCompatActivity {
     public boolean onContextItemSelected(@NonNull MenuItem item) {
         int itemId = item.getItemId();
 
-        if(itemId == R.id.activity_lista_alunos_menu_remover) {
+        if (itemId == R.id.activity_lista_alunos_menu_remover) {
             AdapterView.AdapterContextMenuInfo menuInfo = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
             Aluno alunoEscolhido = adapter.getItem(menuInfo.position);
             removeAluno(alunoEscolhido);
         }
-        
+
         return super.onContextItemSelected(item);
     }
 
@@ -97,7 +99,6 @@ public class ListaAlunosActivity extends AppCompatActivity {
     }
 
 
-
     private void removeAluno(Aluno alunoEscolhido) {
         alunoDAO.remove(alunoEscolhido);
         adapter.remove(alunoEscolhido);
@@ -117,7 +118,7 @@ public class ListaAlunosActivity extends AppCompatActivity {
     }
 
     private void configuraAdapter(ListView listaAlunos) {
-        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
+        adapter = new ListaAlunoAdapter(this);
         listaAlunos.setAdapter(adapter);
     }
 }
