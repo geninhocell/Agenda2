@@ -5,10 +5,14 @@ import static com.alura.agenda2.ui.activity.ConstantesActivities.CHAVE_ALUNO;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.ContextMenu;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -34,6 +38,20 @@ public class ListaAlunosActivity extends AppCompatActivity {
         setTitle(TITULO_APPBAR);
         configuraFABNovoAluno();
         configuraLista();
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        menu.add("Remover");
+    }
+
+    @Override
+    public boolean onContextItemSelected(@NonNull MenuItem item) {
+        AdapterView.AdapterContextMenuInfo menuInfo = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        Aluno alunoEscolhido = adapter.getItem(menuInfo.position);
+        removeAluno(alunoEscolhido);
+        return super.onContextItemSelected(item);
     }
 
     private void configuraFABNovoAluno() {
@@ -65,15 +83,10 @@ public class ListaAlunosActivity extends AppCompatActivity {
         ListView listaAlunos = findViewById(R.id.activity_lista_de_alunos_listview);
         configuraAdapter(listaAlunos);
         configuraListenerDeCliquePorItem(listaAlunos);
-        configuraListenerDeCliqueLongoPorItem(listaAlunos);
+        registerForContextMenu(listaAlunos);
     }
 
-    private void configuraListenerDeCliqueLongoPorItem(ListView listaAlunos) {
-        listaAlunos.setOnItemClickListener((parent, view, position, id) -> {
-            Aluno alunoEscolhido = (Aluno) parent.getItemAtPosition(position);
-            removeAluno(alunoEscolhido);
-        });
-    }
+
 
     private void removeAluno(Aluno alunoEscolhido) {
         alunoDAO.remove(alunoEscolhido);
