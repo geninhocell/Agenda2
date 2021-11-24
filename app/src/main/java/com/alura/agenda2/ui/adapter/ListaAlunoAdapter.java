@@ -9,19 +9,17 @@ import android.widget.TextView;
 
 import com.alura.agenda2.R;
 import com.alura.agenda2.model.Aluno;
-import com.alura.agenda2.ui.activity.ListaAlunosActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ListaAlunoAdapter extends BaseAdapter {
     private final List<Aluno> alunos = new ArrayList<>();
+    private final Context context;
 
     public ListaAlunoAdapter(Context context) {
         this.context = context;
     }
-
-    private Context context;
 
     @Override
     public int getCount() {
@@ -40,24 +38,28 @@ public class ListaAlunoAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        View viewCriada = LayoutInflater.from(context)
-                .inflate(R.layout.item_aluno, parent, false);
-
+        View viewCriada = criaView(parent);
         Aluno alunoDevolvido = alunos.get(position);
 
+        vincula(viewCriada, alunoDevolvido);
+        return viewCriada;
+    }
+
+    private void vincula(View viewCriada, Aluno alunoDevolvido) {
         TextView nome = viewCriada.findViewById(R.id.item_aluno_nome);
         nome.setText(alunoDevolvido.getNome());
 
         TextView telefone = viewCriada.findViewById(R.id.item_aluno_telefone);
         telefone.setText(alunoDevolvido.getTelefone());
-        return viewCriada;
     }
 
-    public void clear() {
-        alunos.clear();
+    private View criaView(ViewGroup parent) {
+        return LayoutInflater.from(context)
+                .inflate(R.layout.item_aluno, parent, false);
     }
 
-    public void addAll(List<Aluno> alunos) {
+    public void atualiza(List<Aluno> alunos){
+        this.alunos.clear();
         this.alunos.addAll(alunos);
     }
 

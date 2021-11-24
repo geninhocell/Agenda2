@@ -4,15 +4,10 @@ import static com.alura.agenda2.ui.activity.ConstantesActivities.CHAVE_ALUNO;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.ContextMenu;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
 import android.widget.ListView;
 
 import androidx.annotation.NonNull;
@@ -24,9 +19,6 @@ import com.alura.agenda2.dao.AlunoDAO;
 import com.alura.agenda2.model.Aluno;
 import com.alura.agenda2.ui.adapter.ListaAlunoAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class ListaAlunosActivity extends AppCompatActivity {
     private final AlunoDAO alunoDAO = new AlunoDAO();
@@ -87,8 +79,7 @@ public class ListaAlunosActivity extends AppCompatActivity {
     }
 
     private void atualizaAlunos() {
-        adapter.clear();
-        adapter.addAll(alunoDAO.todos());
+        adapter.atualiza(alunoDAO.todos());
     }
 
     private void configuraLista() {
