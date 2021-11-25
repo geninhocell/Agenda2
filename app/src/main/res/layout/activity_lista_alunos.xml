@@ -15,7 +15,7 @@
         android:layout_marginBottom="14dp"
         android:clickable="true"
         android:focusable="true"
-        android:contentDescription="adicionar"
+        android:contentDescription="@string/adicionar"
         android:src="@drawable/ic_action_novo_aluno"/>
 
     <ListView

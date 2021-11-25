@@ -4,6 +4,7 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="app/src/main/res/drawable-anydpi/ic_action_novo_aluno.xml" value="0.190625" />
+        <entry key="app/src/main/res/drawable-anydpi/ic_action_salvar_aluno.xml" value="0.1" />
         <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_formulario_aluno.xml" value="0.17447916666666666" />
